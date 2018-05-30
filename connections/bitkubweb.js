@@ -1,13 +1,16 @@
 import Sequelize from 'sequelize';
 import casual from 'casual';
 import _ from 'lodash';
+import dotenv from 'dotenv'
+
+dotenv.config()
 
 const Op = Sequelize.Op;
 
-const bitkubWeb = new Sequelize('bitkub_web', 'root', 'root', {
-    host: 'localhost',
-    dialect: 'mysql',
-    port: 3306,
+const bitkubWeb = new Sequelize(process.env.DB_WEB, process.env.DB_WEB_USER, process.env.DB_WEB_PASSWORD, {
+    host: process.env.DB_WEB_HOST,
+    dialect: process.env.DB_WEB_DRIVER,
+    port: process.env.DB_WEB_POST,
     operatorsAliases: false,
     freezeTableName: false,
 });
