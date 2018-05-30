@@ -3,19 +3,21 @@ import graphqlHTTP from'express-graphql';
 import jwt from 'express-jwt';
 import { graphqlExpress, graphiqlExpress } from 'apollo-server-express';
 import bodyParser from 'body-parser';
-import schema from './data/schema';
+import schema from './schema/schema';
 
 const GRAPHQL_PORT = 3000;
 
 const graphQLServer = express();
 
+const allowEmail = [ 'xxxxxx@xxxx.xxx', 'xxxxxx@xxxxxx.xxxx' ];
+
 const secretJWT = jwt({
-  secret: 'Adc4PC44UfrvMMtK9c8mGcRpsh',
+  secret: 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx',
   credentialsRequired: false,
 });
 
-graphQLServer.use('/graphql', secretJWT, function(req, res, done) {
-    if (req.user.admin === 'sarut.y@bitkub.com') {
+graphQLServer.use('/graphql', secretJWT, (req, res, done) => {
+    if (req.user && allowEmail.indexOf(req.user.admin) >= 0) {
     	done();
     }else{
     	return res.sendStatus(401);
